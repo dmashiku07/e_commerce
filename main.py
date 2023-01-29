@@ -277,7 +277,7 @@ def addToCart():
         conn.close()
         return redirect(url_for('root'))
 
-
+# cart endpoint
 @app.route("/cart")
 def cart():
     if 'email' not in session:
