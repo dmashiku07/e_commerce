@@ -1,4 +1,5 @@
 # e_commerce
-e_commerce flask application
-a flask application where users can log in and out. Manage products (Add, Edit, Delete, View)
-customers can create order and a user can select a card or cash payment method. 
+aAn e_commerce flask application
+designed to allow customers to log in and out, and manage products (Add, Edit, Delete, View).
+Customers can create orders and select a payment method between card and cash to complete transaction. 
+Front end implementation kept simple with emphesis placed on mapping endpoints. 
