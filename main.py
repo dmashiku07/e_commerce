@@ -51,6 +51,31 @@ def administration():
     else:
         return render_template('login1.html', error='')
 
+#added route for displayCategory
+@app.route("/displayCategory", methods=['GET'])
+def displayCategory():
+    loggedIn, firstName, noOfItems = getLoginDetails()
+    categoryId = request.args.get("categoryId")
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT products.productId, products.name, products.price, products.image, categories.name FROM products, categories WHERE products.categoryId = categories.categoryId AND categories.categoryId = ?", (categoryId, ))
+        data = cur.fetchall()
+        conn.close()
+        categoryName = data[0][4]
+        data = parse(data)
+        return render_template('displayCategory.html', data=data, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryName=categoryName)
+
+#added product description endpoint
+@app.route("/productDescription", methods=['GET'])
+def productDescription():
+    loggedIn, firstName, noOfItems = getLoginDetails()
+    productId = request.args.get('productId')
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute('SELECT productId, name, price, description, image, stock FROM products WHERE productId = ?', (productId, ))
+        productData = cur.fetchone()
+        conn.close()
+        return render_template("productDescription.html", data=productData, loggedIn = loggedIn, firstName = firstName, noOfItems = noOfItems)
 
 
 # Items in the cart
@@ -255,8 +280,6 @@ def login():
 
 
 
-
-
 @app.route("/addToCart")
 def addToCart():
     if 'email' not in session:
@@ -297,31 +320,6 @@ def cart():
         totalPrice += row[2]
     return render_template("cart.html", products=products, totalPrice=totalPrice, loggedIn=loggedIn,
                            firstName=firstName, noOfItems=noOfItems)
-#added route for displayCategory
-@app.route("/displayCategory")
-def displayCategory():
-        loggedIn, firstName, noOfItems = getLoginDetails()
-        categoryId = request.args.get("categoryId")
-        with sqlite3.connect('database.db') as conn:
-            cur = conn.cursor()
-            cur.execute("SELECT products.productId, products.name, products.price, products.image, categories.name FROM products, categories WHERE products.categoryId = categories.categoryId AND categories.categoryId = ?", (categoryId, ))
-            data = cur.fetchall()
-        conn.close()
-        categoryName = data[0][4]
-        data = parse(data)
-        return render_template('displayCategory.html', data=data, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems, categoryName=categoryName)
-
-#added product description endpoint
-@app.route("/productDescription")
-def productDescription():
-    loggedIn, firstName, noOfItems = getLoginDetails()
-    productId = request.args.get('productId')
-    with sqlite3.connect('database.db') as conn:
-        cur = conn.cursor()
-        cur.execute('SELECT productId, name, price, description, image, stock FROM products WHERE productId = ?', (productId, ))
-        productData = cur.fetchone()
-    conn.close()
-    return render_template("productDescription.html", data=productData, loggedIn = loggedIn, firstName = firstName, noOfItems = noOfItems)
 
 @app.route("/removeFromCart")
 def removeFromCart():
@@ -447,7 +445,7 @@ def cartout():
 def confirm_order():
     return render_template("confirm.html")
 
-@app.route("/checkout", methods=["GET"])
+@app.route("/checkout")
 def checkout():
     if 'email' not in session:
         return redirect(url_for('loginForm'))
