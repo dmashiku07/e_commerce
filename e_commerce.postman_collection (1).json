@@ -21,7 +21,8 @@
 						"1"
 					],
 					"port": "5000"
-				}
+				},
+				"description": "Home page or landing page endpoint"
 			},
 			"response": []
 		},
@@ -44,7 +45,8 @@
 						"account",
 						"orders"
 					]
-				}
+				},
+				"description": "Once use is signed in, endpoint to check orders on the customers account."
 			},
 			"response": []
 		},
@@ -68,7 +70,8 @@
 						"profile",
 						"edit"
 					]
-				}
+				},
+				"description": "Edit profile information, name, email, address, phone number...etc"
 			},
 			"response": []
 		},
@@ -90,7 +93,8 @@
 					"path": [
 						"loginForm"
 					]
-				}
+				},
+				"description": "Login In for customers endpoint"
 			},
 			"response": []
 		},
@@ -135,7 +139,54 @@
 					"path": [
 						"add"
 					]
-				}
+				},
+				"description": "Administration adding items to the store for users."
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/checkout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/checkout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"checkout"
+					]
+				},
+				"description": "endpoint to proceed to checkout where user can select payment method"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/payments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/payments",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"payments"
+					]
+				},
+				"description": "endpoint for customer to choose between cash or credit and make a call to the payment api"
 			},
 			"response": []
 		}
