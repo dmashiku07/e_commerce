@@ -153,7 +153,7 @@ def removeItem():
 
 
 
-
+# endpoint to view profile
 @app.route("/account/profile")
 def profileHome():
     if 'email' not in session:
